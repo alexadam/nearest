@@ -1,7 +1,10 @@
 from __future__ import division
 from PIL import Image
 import math, time
-import numpy
+import numpy as np
+import struct
+from scipy.io import wavfile
+from fileinput import filename
 
 def isPrime(number):
     for i in range(2, int(math.sqrt(number))+1):
@@ -79,19 +82,30 @@ def nimg(fileName, dirUp = True):
                 newImagePixels[x, y] = (r, g, b)
                 
     newImage.save(fileName + '_prime.png')
- 
-# def primesfrom2ton(n):
-#     """ Input n>=6, Returns a array of primes, 2 <= p < n """
-#     sieve = numpy.ones(n/3 + (n%6==2), dtype=numpy.bool)
-#     print sieve
-#     for i in xrange(1,int(n**0.5)/3+1):
-#         if sieve[i]:
-#             print sieve
-#             k=3*i+1|1
-#             sieve[       k*k/3     ::2*k] = False
-#             sieve[k*(k-2*(i&1)+4)/3::2*k] = False
-# 
-#     return numpy.r_[2,3,((3*numpy.nonzero(sieve)[0][1:]+1)|1)]
-
+    
+def genFromWavs(fileName, dirUp = True):
+    
+    rate1,dat1 = wavfile.read(fileName)
+    
+    output = dat1
+    for i in range(len(dat1)):
+        if i % 44000 == 0: print (i/44000)
+        
+        for k in range(2): 
+            output[i][k] = getNearest(dat1[i][k], isPrime, dirUp)
+    
+    wavfile.write(fileName + "_out.wav", rate1, output)
+    
+    
+def genFromBin(fileName, dirUp = True):
+    f1 = open(fileName, 'rb')
+    a = np.fromfile(f1, dtype=np.uint16)
+    
+    for i in range(1000, len(a)):
+        print i
+        a[i] = getNearest(a[i], isPrime, dirUp)
+    
+    a.tofile(fileName + "_out.wav")
+    
 if __name__ == '__main__':
     nimg('monalisa.png', True)
