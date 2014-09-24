@@ -68,7 +68,7 @@ def nimg(fileName, dirUp = True):
             else:
                 p = r 
                 p = (p << 8) + g
-                p = (p << 8) + b
+                p = (p << 16) + b
                 
                 p = getNearest(p, func, dirUp)
                 

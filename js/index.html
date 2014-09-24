@@ -1,0 +1,78 @@
+<html>
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+	<script type="text/javascript" src="nearest.js"></script>
+	
+	<style type="text/css">
+		#header {
+			width: 100%;
+			height: 30%;
+		}
+		
+		#canvasParent {
+			width: 49%;
+			height: 70%;
+			overflow-x: scroll;
+    		overflow-y: scroll;
+    		display: inline-block;
+		}
+		
+	</style>
+	
+</head>
+
+<body>
+	<div id="header">
+		<h3>Replace each pixel's value with the nearest (prime/fibo etc.) number</h3>
+		<br>
+		<table>
+			<tr>
+				<td>Select image:</td>
+				<td><input id="fileUrl" type="text" name="fileUrl" size="100"  value="monalisa2.png"></td>
+				<td><button id="openButton" onclick="loadCanvas($('#fileUrl').val());">Open</button></td>
+			</tr>
+			<tr>
+				<td>Type:</td>
+				<td>
+					<select id="nearestVal">
+						<option value="prime">Prime Nr.</option>
+						<option value="fibo">Fibonacci Nr</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Apply:</td>
+				<td>
+					<select id="applyVal">
+						<option value="rgb">RGB</option>
+						<option value="pixel">Pixel</option>
+					</select>
+					<b>RGB</b> : apply on each R,G and B; <b>pixel</b> : apply on R + G + B
+				</td>
+			</tr>
+			<tr>
+				<td>Direction:</td>
+				<td>
+					<select id="nearestDir">
+						<option value="up">Up</option>
+						<option value="down">Down</option>
+					</select>
+					<b>Up</b> : increment; <b>Down</b> : decrement if not a fibo/prime value
+				</td>
+			</tr>
+			<tr>
+				<td><button type="button" onclick='nearest($("#nearestVal").val(), $("#applyVal").val(), $("#nearestDir").val());'>Replace</button></td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="canvasParent">
+		<canvas id="originalCanvas"></canvas>
+	</div>
+	<div id="canvasParent">
+		<canvas id="nearCanvas"></canvas>
+	</div>
+</body>
+
+</html>
