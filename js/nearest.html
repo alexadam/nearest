@@ -1,0 +1,55 @@
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>generativ - nearest</title>
+
+<script type="text/javascript" src="nearest.js"></script>
+<script src="../../jquery-2.1.1.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../apps-style.css">
+
+</head>
+
+<body>
+    <div id="#input-zone" class="pattern01">
+		Replace each pixel's value with the nearest (prime/fibo etc.) number<br>
+		<label class="clabel">Select Image:</label>
+		<input id="fileUrl" class="cinput" type="text" name="fileUrl" size="70" value="monalisa.jpg">
+		<button id="openButton" class="cbutton" onclick="loadCanvas($('#fileUrl').val());">Open</button><br>
+		<label class="clabel">Type:</label>
+		<select id="nearestVal" class="cinput">
+			<option value="prime">Prime Nr.</option>
+			<option value="fibo">Fibonacci Nr</option>
+			<option value="psquare">Perfect Square</option>
+			<option value="pentagonal">Pentagonal</option>
+		</select>
+		<br>
+		<label class="clabel">Apply:</label>
+		<select id="applyVal" class="cinput">
+			<option value="rgb">RGB</option>
+			<option value="pixel">Pixel</option>
+		</select> 
+		<b>RGB</b> : apply on each R,G and B; <b>pixel</b> : apply on R + G + B
+		<br>
+		<label class="clabel">Direction:</label> 
+		<select id="nearestDir" class="cinput">
+			<option value="up">Up</option>
+			<option value="down">Down</option>
+		</select> <b>Up</b> : increment; <b>Down</b> : decrement if not a fibo/prime value
+		<button type="button" class="cbutton" style="margin-left: 305px;" onclick='nearest($("#nearestVal").val(), $("#applyVal").val(), $("#nearestDir").val());'>Replace</button>
+	</div>
+
+	<div style="display: inline-block; width: 100%;">
+		<div class="canvasScroll">
+			<canvas id="originalCanvas"></canvas>
+		</div>
+		<div class="canvasScroll">
+			<canvas id="nearCanvas"></canvas>
+		</div>
+	</div>	
+</body>
+
+</html>
